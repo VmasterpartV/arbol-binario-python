@@ -45,28 +45,42 @@ class Arbol:
         else:
             return self.__buscar(nodo.derecha, busqueda)
 
-    def __remove(self,nodo,key):
-        if(nodo.dato == key):        
+    def __remove(self,nodo,dato):
+        if(nodo.dato == dato):        
             if(nodo.derecha!= None):
-                nodo.derecha,key,value = self.delmin(nodo.derecha)
-                newnodo = Nodo(key,value)
+                nodo.derecha,dato = self.delmin(nodo.derecha)
+                newnodo = Nodo(dato)
                 newnodo.derecha = nodo.derecha
                 newnodo.izquierda = nodo.izquierda
                 return newnodo
             elif(nodo.izquierda!=None):
-                nodo.izquierda,key,value = self.delmax(nodo.izquierda)
-                newnodo = Nodo(key,value)
+                nodo.izquierda,dato = self.delmax(nodo.izquierda)
+                newnodo = Nodo(dato)
                 newnodo.derecha = nodo.derecha
                 newnodo.izquierda = nodo.derecha
                 return newnodo
             else:
                 return None
-        elif(nodo.dato > key):
-            nodo.izquierda = self.__remove(nodo.izquierda,key)
+        elif(nodo.dato > dato):
+            nodo.izquierda = self.__remove(nodo.izquierda,dato)
             return nodo
         else:
-            nodo.derecha = self.__remove(nodo.derecha,key)
+            nodo.derecha = self.__remove(nodo.derecha,dato)
             return nodo
+
+    
+    def delmin(self,nodo):
+        if(nodo.izquierda == None):
+            return nodo.derecha,nodo.dato
+        else:
+            nodo.izquierda,key = self.delmin(nodo.izquierda)
+            return nodo,key
+    def delmax(self,nodo):
+        if(nodo.derecha == None):
+            return nodo.izquierda,nodo.dato
+        else:
+            nodo.derecha,key= self.delmax(nodo.derecha)
+
 
     # Funciones públicas
 
