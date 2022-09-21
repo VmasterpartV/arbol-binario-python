@@ -80,6 +80,7 @@ class Arbol:
             return nodo.izquierda,nodo.dato
         else:
             nodo.derecha,key= self.delmax(nodo.derecha)
+            return nodo,key
 
 
     # Funciones públicas
