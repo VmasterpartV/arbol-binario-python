@@ -45,6 +45,29 @@ class Arbol:
         else:
             return self.__buscar(nodo.derecha, busqueda)
 
+    def __remove(self,nodo,key):
+        if(nodo.dato == key):        
+            if(nodo.derecha!= None):
+                nodo.derecha,key,value = self.delmin(nodo.derecha)
+                newnodo = Nodo(key,value)
+                newnodo.derecha = nodo.derecha
+                newnodo.izquierda = nodo.izquierda
+                return newnodo
+            elif(nodo.izquierda!=None):
+                nodo.izquierda,key,value = self.delmax(nodo.izquierda)
+                newnodo = Nodo(key,value)
+                newnodo.derecha = nodo.derecha
+                newnodo.izquierda = nodo.derecha
+                return newnodo
+            else:
+                return None
+        elif(nodo.dato > key):
+            nodo.izquierda = self.__remove(nodo.izquierda,key)
+            return nodo
+        else:
+            nodo.derecha = self.__remove(nodo.derecha,key)
+            return nodo
+
     # Funciones públicas
 
     def agregar(self, dato):
@@ -67,3 +90,6 @@ class Arbol:
 
     def buscar(self, busqueda):
         return self.__buscar(self.raiz, busqueda)
+
+    def remove(self, dato):
+        self.raiz = self.__remove(self.raiz, dato)
